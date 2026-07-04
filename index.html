@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tuntasin — Bayar Tagihan &amp; Isi Pulsa, Beres Sekali Klik</title>
+<meta name="description" content="Tuntasin — simulasi aplikasi pembayaran tagihan dan isi pulsa untuk kebutuhan sehari-hari.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="ambient-bg" aria-hidden="true"></div>
+
+<div class="device-frame">
+  <div class="device-notch" aria-hidden="Tuntasin"></div>
+  <div class="app-shell" id="appShell">
+
+    <!-- ============ TOP BAR ============ -->
+    <header class="topbar">
+      <button class="avatar-btn" data-nav="profil" aria-label="Buka profil">
+        <i class="fa-solid fa-user"></i>
+      </button>
+      <div class="topbar-title">
+        <span class="topbar-eyebrow" id="topbarEyebrow">Tuntasin</span>
+        <h1 id="topbarTitle">Selamat datang kembali</h1>
+      </div>
+      <button class="icon-btn" id="themeToggleBtn" aria-label="Ganti tema gelap/terang">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </header>
+
+    <!-- ============ MAIN CONTENT ============ -->
+    <main class="app-content" id="appContent" tabindex="-1">
+
+      <!-- ---------- BERANDA ---------- -->
+      <section class="page" data-page="beranda" id="page-beranda">
+        <div class="balance-ticket">
+          <div class="balance-ticket__notch balance-ticket__notch--left"></div>
+          <div class="balance-ticket__notch balance-ticket__notch--right"></div>
+          <span class="balance-ticket__label"><i class="fa-solid fa-wallet"></i> Saldo Tuntasin</span>
+          <div class="balance-ticket__amount" id="saldoAmount">Rp0</div>
+          <button class="btn btn--ghost-light" id="topupBtn"><i class="fa-solid fa-plus"></i> Top Up Saldo</button>
+        </div>
+
+        <h2 class="section-heading">Akses cepat</h2>
+        <div class="quick-grid">
+          <button class="quick-card" data-quick="tagihan:listrik"><i class="fa-solid fa-bolt"></i><span>Listrik</span></button>
+          <button class="quick-card" data-quick="tagihan:pdam"><i class="fa-solid fa-faucet-drip"></i><span>PDAM</span></button>
+          <button class="quick-card" data-quick="tagihan:internet"><i class="fa-solid fa-wifi"></i><span>Internet</span></button>
+          <button class="quick-card" data-quick="kuliah"><i class="fa-solid fa-graduation-cap"></i><span>Kuliah</span></button>
+          <button class="quick-card" data-quick="pulsa"><i class="fa-solid fa-signal"></i><span>Isi Pulsa</span></button>
+          <button class="quick-card" data-quick="tagihan:seminar"><i class="fa-solid fa-people-group"></i><span>Seminar</span></button>
+          <button class="quick-card" data-quick="riwayat"><i class="fa-solid fa-clock-rotate-left"></i><span>Riwayat</span></button>
+          <button class="quick-card" data-quick="bantuan"><i class="fa-solid fa-circle-question"></i><span>Bantuan</span></button>
+        </div>
+
+        <h2 class="section-heading">Promo untukmu</h2>
+        <div class="promo-scroll">
+          <div class="promo-card promo-card--a">
+            <strong>Cashback 20% Listrik</strong>
+            <span>Maks. Rp10.000 untuk pengguna baru</span>
+          </div>
+          <div class="promo-card promo-card--b">
+            <strong>Bebas Biaya Admin SPP</strong>
+            <span>Berlaku untuk semua cicilan bulan ini</span>
+          </div>
+          <div class="promo-card promo-card--c">
+            <strong>Bonus Kuota 1GB</strong>
+            <span>Isi pulsa min. Rp50.000, kuota otomatis masuk</span>
+          </div>
+        </div>
+
+        <div class="section-heading-row">
+          <h2 class="section-heading">Transaksi terakhir</h2>
+          <button class="link-btn" data-nav="riwayat">Lihat semua <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+        <div id="beranda-riwayat" class="mini-list"></div>
+      </section>
+
+      <!-- ---------- TAGIHAN ---------- -->
+      <section class="page" data-page="tagihan" id="page-tagihan" hidden>
+        <div id="tagihan-kategori-grid" class="cat-grid">
+          <button class="cat-card" data-cat="listrik"><i class="fa-solid fa-bolt"></i><span>Listrik (PLN)</span></button>
+          <button class="cat-card" data-cat="pdam"><i class="fa-solid fa-faucet-drip"></i><span>PDAM</span></button>
+          <button class="cat-card" data-cat="internet"><i class="fa-solid fa-wifi"></i><span>Internet</span></button>
+          <button class="cat-card" data-cat="seminar"><i class="fa-solid fa-people-group"></i><span>Seminar / Event</span></button>
+        </div>
+
+        <div id="tagihan-form-wrap" class="hidden-block">
+          <button class="back-link" id="tagihanBackBtn"><i class="fa-solid fa-arrow-left"></i> Ganti kategori</button>
+          <div class="form-card">
+            <div class="form-card__icon"><i class="fa-solid" id="tagihanFormIcon"></i></div>
+            <h3 id="tagihanFormTitle">Listrik (PLN)</h3>
+            <label class="field-label" for="tagihanInput" id="tagihanFormHint">Nomor Meter / ID Pelanggan</label>
+            <input type="text" id="tagihanInput" class="field-input" placeholder="Masukkan nomor pelanggan" autocomplete="off">
+            <p class="field-error" id="tagihanError"></p>
+            <button class="btn btn--primary btn--block" id="tagihanCekBtn">
+              <span class="btn-label">Cek Tagihan</span>
+              <span class="btn-spinner" hidden></span>
+            </button>
+          </div>
+
+          <div id="tagihan-result" class="hidden-block"></div>
+        </div>
+      </section>
+
+      <!-- ---------- KULIAH / SPP ---------- -->
+      <section class="page" data-page="kuliah" id="page-kuliah" hidden>
+        <div class="form-card">
+          <div class="form-card__icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <h3>Cicilan Biaya Kuliah</h3>
+          <label class="field-label" for="nimInput">Nomor Induk Mahasiswa (NIM)</label>
+          <input type="text" id="nimInput" class="field-input" placeholder="Contoh: 202410001" autocomplete="off" inputmode="numeric" maxlength="9">
+          <p class="field-error" id="nimError"></p>
+          <button class="btn btn--primary btn--block" id="nimCekBtn">
+            <span class="btn-label">Lihat Tagihan Semester</span>
+            <span class="btn-spinner" hidden></span>
+          </button>
+        </div>
+        <div id="kuliah-result" class="hidden-block"></div>
+      </section>
+
+      <!-- ---------- PULSA ---------- -->
+      <section class="page" data-page="pulsa" id="page-pulsa" hidden>
+        <h2 class="section-heading">Pilih provider</h2>
+        <div class="provider-grid" id="providerGrid"></div>
+
+        <div class="form-card">
+          <label class="field-label" for="phoneInput">Nomor HP</label>
+          <input type="text" id="phoneInput" class="field-input" placeholder="08xxxxxxxxxx" autocomplete="off" inputmode="numeric" maxlength="13">
+          <p class="field-error" id="phoneError"></p>
+          <p class="field-detected" id="phoneDetected"></p>
+
+          <div class="tab-switch">
+            <button class="tab-switch__btn active" data-tab="pulsa">Pulsa</button>
+            <button class="tab-switch__btn" data-tab="paket">Paket Data</button>
+          </div>
+
+          <div id="pulsaNominalWrap" class="nominal-grid"></div>
+          <div id="paketDataWrap" class="paket-list hidden-block"></div>
+
+          <label class="field-label" id="customLabel" style="display:none;" for="customNominal">Nominal Custom (Rp10.000 – Rp1.000.000)</label>
+          <input type="text" id="customNominal" class="field-input" style="display:none;" placeholder="Masukkan nominal" inputmode="numeric">
+
+          <button class="btn btn--primary btn--block" id="pulsaLanjutBtn" style="margin-top:14px;">Lanjut</button>
+        </div>
+
+        <div id="pulsa-result" class="hidden-block"></div>
+      </section>
+
+      <!-- ---------- RIWAYAT ---------- -->
+      <section class="page" data-page="riwayat" id="page-riwayat" hidden>
+        <div class="riwayat-toolbar">
+          <select id="riwayatFilter" class="field-select">
+            <option value="all">Semua kategori</option>
+            <option value="listrik">Listrik</option>
+            <option value="pdam">PDAM</option>
+            <option value="internet">Internet</option>
+            <option value="seminar">Seminar</option>
+            <option value="kuliah">Biaya Kuliah</option>
+            <option value="pulsa">Pulsa / Paket Data</option>
+          </select>
+          <button class="btn btn--danger-outline" id="clearHistoryBtn"><i class="fa-solid fa-trash"></i> Hapus</button>
+        </div>
+        <div id="riwayatList" class="riwayat-list"></div>
+        <p class="empty-state" id="riwayatEmpty" hidden>Belum ada transaksi. Yuk mulai bayar tagihan pertamamu.</p>
+      </section>
+
+      <!-- ---------- PROFIL ---------- -->
+      <section class="page" data-page="profil" id="page-profil" hidden>
+        <div class="profile-card">
+          <div class="profile-avatar"><i class="fa-solid fa-user"></i></div>
+          <h3 id="profileName">Raka Pratama</h3>
+          <span class="profile-sub">Member sejak Januari 2026</span>
+        </div>
+        <div class="form-card">
+          <label class="field-label" for="profileNameInput">Nama Lengkap</label>
+          <input type="text" id="profileNameInput" class="field-input">
+          <label class="field-label" for="profileEmailInput">Email</label>
+          <input type="email" id="profileEmailInput" class="field-input">
+          <label class="field-label" for="profilePhoneInput">Nomor HP</label>
+          <input type="text" id="profilePhoneInput" class="field-input">
+          <button class="btn btn--primary btn--block" id="saveProfileBtn" style="margin-top:12px;">Simpan Perubahan</button>
+        </div>
+      </section>
+
+      <!-- ---------- BANTUAN / FAQ ---------- -->
+      <section class="page" data-page="bantuan" id="page-bantuan" hidden>
+        <h2 class="section-heading">Pertanyaan umum</h2>
+        <div class="faq-list" id="faqList"></div>
+      </section>
+
+    </main>
+
+    <!-- ============ BOTTOM NAV ============ -->
+    <nav class="bottom-nav" aria-label="Navigasi utama">
+      <button data-nav="beranda" class="nav-active" aria-current="page"><i class="fa-solid fa-house"></i><span>Beranda</span></button>
+      <button data-nav="tagihan"><i class="fa-solid fa-file-invoice-dollar"></i><span>Tagihan</span></button>
+      <button data-nav="kuliah"><i class="fa-solid fa-graduation-cap"></i><span>Kuliah</span></button>
+      <button data-nav="pulsa"><i class="fa-solid fa-signal"></i><span>Pulsa</span></button>
+      <button data-nav="riwayat"><i class="fa-solid fa-clock-rotate-left"></i><span>Riwayat</span></button>
+    </nav>
+  </div>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="modal-overlay" id="modalOverlay" hidden>
+  <div class="modal" id="modalBox" role="dialog" aria-modal="true"></div>
+</div>
+
+<!-- ============ TOASTS ============ -->
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+<!-- ============ PRINT AREA (populated on demand) ============ -->
+<div id="printArea" class="print-only"></div>
+
+<script src="js/data.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
